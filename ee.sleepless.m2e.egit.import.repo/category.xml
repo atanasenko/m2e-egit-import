@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/ee.sleepless.m2e.egit.import.feature_0.1.0.qualifier.jar" id="ee.sleepless.m2e.egit.import.feature" version="0.1.0.qualifier">
+      <category name="ee.sleepless.m2e.egit.import"/>
+   </feature>
+   <category-def name="ee.sleepless.m2e.egit.import" label="M2E Egit Import"/>
+</site>

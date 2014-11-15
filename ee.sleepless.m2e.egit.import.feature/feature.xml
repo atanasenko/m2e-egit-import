@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="ee.sleepless.m2e.egit.import.feature"
+      label="M2E Egit Import"
+      version="0.1.0.qualifier"
+      license-feature="org.eclipse.license"
+      license-feature-version="0.0.0">
+   <install-handler/>
+
+   <requires>
+      <import plugin="org.eclipse.m2e.core"/>
+      <import plugin="org.eclipse.m2e.core.ui"/>
+      <import plugin="org.eclipse.egit.ui"/>
+   </requires>
+
+   <plugin
+         id="ee.sleepless.m2e.egit.import.plugin"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

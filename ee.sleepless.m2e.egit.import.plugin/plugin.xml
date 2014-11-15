@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-3">
+         <command
+               commandId="ee.sleepless.m2e.egit.import.ImportMavenProjects"
+               icon="icons/import_m2_project.gif"
+               label="Import Maven Projects..."
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <or>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                        </instanceof>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode">
+                        </instanceof>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
+                        </instanceof>
+                     </or>
+                  </iterate>
+                  <iterate>
+                     <not>
+                        <test
+                              property="GitRepository.isBare">
+                        </test>
+                     </not>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="ee.sleepless.m2e.egit.ImportMavenProjectsCommand"
+            id="ee.sleepless.m2e.egit.import.ImportMavenProjects"
+            name="Import Maven Projects...">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commandImages">
+      <image
+            commandId="ee.sleepless.m2e.egit.import.ImportMavenProjects"
+            icon="icons/import_m2_project.gif">
+      </image>
+   </extension>
+
+</plugin>
