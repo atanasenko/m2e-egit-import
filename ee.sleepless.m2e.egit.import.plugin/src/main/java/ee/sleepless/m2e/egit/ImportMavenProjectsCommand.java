@@ -33,57 +33,56 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 @SuppressWarnings({ "rawtypes", "restriction" })
 public class ImportMavenProjectsCommand extends AbstractHandler {
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		List<RepositoryTreeNode> selectedNodes = getSelectedNodes(event);
-		if (selectedNodes == null || selectedNodes.isEmpty()) {
-			MessageDialog
-					.openError(Display.getDefault().getActiveShell(),
-					UIText.ImportProjectsWrongSelection,
-					UIText.ImportProjectsSelectionInRepositoryRequired);
-			return null;
-		}
-		if (!(((List) selectedNodes).get(0) instanceof RepositoryTreeNode)) {
-			MessageDialog.openError(Display.getDefault().getActiveShell(),
-					UIText.ImportProjectsWrongSelection,
-					UIText.ImportProjectsSelectionInRepositoryRequired);
-			return null;
-		}
-		RepositoryTreeNode node = selectedNodes.get(0);
-		String path;
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        List<RepositoryTreeNode> selectedNodes = getSelectedNodes(event);
+        if (selectedNodes == null || selectedNodes.isEmpty()) {
+            MessageDialog.openError(Display.getDefault().getActiveShell(),
+                    UIText.ImportProjectsWrongSelection,
+                    UIText.ImportProjectsSelectionInRepositoryRequired);
+            return null;
+        }
+        
+        if (!(((List) selectedNodes).get(0) instanceof RepositoryTreeNode)) {
+            MessageDialog.openError(Display.getDefault().getActiveShell(),
+                    UIText.ImportProjectsWrongSelection,
+                    UIText.ImportProjectsSelectionInRepositoryRequired);
+            return null;
+        }
+        
+        RepositoryTreeNode node = selectedNodes.get(0);
+        String path;
 
-		switch (node.getType()) {
-		case REPO:
-			// fall through
-		case WORKINGDIR:
-			path = node.getRepository().getWorkTree().toString();
-			break;
-		case FOLDER:
-			path = ((FolderNode) node).getObject().getPath().toString();
-			break;
-		default:
-			MessageDialog.openError(Display.getDefault().getActiveShell(),
-					UIText.ImportProjectsWrongSelection,
-					UIText.ImportProjectsSelectionInRepositoryRequired);
-			return null;
-		}
-		
-		
-		WizardDialog dlg = new WizardDialog(
-				HandlerUtil.getActiveShell(event),
-				new MavenImportWizard(new ProjectImportConfiguration(), Collections.singletonList(path)));
-		dlg.open();
+        switch (node.getType()) {
+        case REPO:
+            // fall through
+        case WORKINGDIR:
+            path = node.getRepository().getWorkTree().toString();
+            break;
+        case FOLDER:
+            path = ((FolderNode) node).getObject().getPath().toString();
+            break;
+        default:
+            MessageDialog.openError(Display.getDefault().getActiveShell(),
+                    UIText.ImportProjectsWrongSelection,
+                    UIText.ImportProjectsSelectionInRepositoryRequired);
+            return null;
+        }
 
-		return null;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<RepositoryTreeNode> getSelectedNodes(ExecutionEvent event)
-			throws ExecutionException {
-		ISelection selection = HandlerUtil.getCurrentSelectionChecked(event);
-		if (selection instanceof IStructuredSelection)
-			return ((IStructuredSelection) selection).toList();
-		else
-			return Collections.emptyList();
-	}
+        WizardDialog dlg = new WizardDialog(HandlerUtil.getActiveShell(event),
+                new MavenImportWizard(new ProjectImportConfiguration(), Collections.singletonList(path)));
+        dlg.open();
+
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<RepositoryTreeNode> getSelectedNodes(ExecutionEvent event)
+            throws ExecutionException {
+        ISelection selection = HandlerUtil.getCurrentSelectionChecked(event);
+        if (selection instanceof IStructuredSelection)
+            return ((IStructuredSelection) selection).toList();
+        else
+            return Collections.emptyList();
+    }
 
 }
